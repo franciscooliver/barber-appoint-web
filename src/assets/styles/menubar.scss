@@ -1,0 +1,49 @@
+@import url('../styles/_variables.scss');
+
+.p-menubar {
+  background-color: var(--primary-color) !important;
+  border-bottom: 2px solid var(--secondary-color);
+  border-radius: 0 !important;
+  padding: 10px;
+
+  .p-menubar-root-list {
+    display: flex;
+    align-items: center;
+  }
+
+  .p-menubar-item:not(.p-disabled) > .p-menubar-item-content:hover {
+    color: var(--text-menu-item-color) !important;
+  }
+
+  .p-menubar-item:not(.p-disabled) > .p-menubar-item-content:hover .p-menubar-item-icon {
+    color: var(--icon-menu-item-color) !important;
+  }
+
+  .p-menubar-item-link {
+    .p-menubar-item-label {
+      color: var(--text-menu-item-color);
+    }
+    .p-menubar-item-icon {
+      color: var(--icon-color);
+    }
+
+    &:hover {
+     color: --text-menu-item-color;
+     opacity: 0.8;
+    }
+  }
+
+  .p-menuitem {
+    .p-menuitem-link {
+      color: var(--icon-color);
+      font-weight: bold;
+      padding: 10px 15px;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: var(--menu-hover-color);
+        color: white;
+      }
+    }
+  }
+}

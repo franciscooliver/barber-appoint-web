@@ -1,0 +1,16 @@
+@use 'variables' as v;
+
+.p-button {
+  background: v.$button-color;
+  border: none;
+
+  &:hover {
+    background: v.$button-hover;
+  }
+}
+
+//.p-inputtext {
+//  border-radius: 5px;
+//  padding: 10px;
+//  font-size: v.$base-font-size;
+//}

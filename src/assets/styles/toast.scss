@@ -1,0 +1,43 @@
+.p-toast.p-component.p-toast-top-right {
+  .p-toast-message {
+    border-width: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    backdrop-filter: none !important;
+
+    &.p-toast-message-error {
+      color: white;
+      .p-toast-message-content {
+        background-color: var(--p-red-500);
+        border-radius: 0.5rem;
+        
+        .p-toast-message-text,
+        .p-toast-detail {
+          color: white !important;
+        }
+        
+        .p-toast-message-icon,
+        .p-toast-icon-close {
+          color: white !important;
+        }
+      }
+    } 
+
+    &.p-toast-message-success {
+      color: white;
+      .p-toast-message-content {
+        background-color: var(--p-green-500);
+        border-radius: 0.5rem;
+        
+        .p-toast-message-text, 
+        .p-toast-detail {
+          color: white !important;
+        }
+        
+        .p-toast-message-icon,
+        .p-toast-icon-close {
+          color: white !important;
+        }
+      }
+    }
+  }
+}

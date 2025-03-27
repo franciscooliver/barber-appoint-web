@@ -1,0 +1,25 @@
+// Paleta de Cores
+$primary-color: #0077b6;
+$secondary-color: #00b4d8;
+$background-color: #f8f9fa;
+$text-color: #343a40;
+$text-menu-c-color: #fff;
+$icon-menu-item-color: #fff;
+$button-color: #0077b6;
+$button-hover: #005f8e;
+// Tipografia
+$font-family: 'Inter', sans-serif;
+$base-font-size: 16px;
+
+:root {
+  --primary-color: #0077b6; // Azul principal
+  --secondary-color: #00b4d8; // Azul claro
+  --background-color: #f8f9fa; // Fundo geral
+  --text-color: #343a40; // Cor padrão do texto
+  --text-menu-item-color: #fff;
+  --button-color: #0077b6;
+  --icon-color: #fff;
+  --button-hover: #005f8e;
+  --font-family: 'Inter', sans-serif;
+  --base-font-size: 16px;
+}
