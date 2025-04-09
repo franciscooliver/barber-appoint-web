@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { appointmentService, Appointment, AppointmentFilters, AppointmentStatus } from '@/services/appointmentService'
+import { appointmentService, Appointment, AppointmentStatus } from '@/services/appointmentService'
 import { ErrorResponse, SuccessResponse } from '@/types/auth'
 import { useAuthStore } from "@/stores/auth";
 

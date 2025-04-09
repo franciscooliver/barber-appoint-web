@@ -3,12 +3,13 @@ export interface Credentials {
   password: string
 }
 
-interface Address {
+export interface Address {
   id: number
   street: string
   city: string
   state: string
   zipcode: string
+  number: string
 }
 
 export interface User {
@@ -23,7 +24,7 @@ export interface User {
 
 export interface ApiResponse {
   message: string
-  access_token?: string
+  access_token?: string|undefined
   data?: object
   user?: User
 }
@@ -43,8 +44,6 @@ export class SuccessResponse implements ApiResponse {
   access_token?: string | undefined
 
   static create(data: ApiResponse): SuccessResponse {
-    console.log(data)
-
     return new SuccessResponse(data.message, data.data, data.access_token, data.user)
   }
 }

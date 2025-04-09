@@ -1,6 +1,7 @@
 import baseService from '@/services/baseService'
 import { ErrorResponse, SuccessResponse } from '@/types/auth'
 import { AxiosError } from 'axios'
+import ToastService from './ToastService'
 
 interface User {
   id: number
@@ -72,9 +73,11 @@ export const appointmentService = {
       })
     } catch (error) {
       if (error instanceof AxiosError) {
+        const errorMessage = error.response?.data.message || 'Erro desconhecido'
+        ToastService.error({ detail: errorMessage })
         return ErrorResponse.create({
-          message: error.response?.data.message || 'Erro desconhecido',
-          statusCode: error.response?.status || 500,
+          message: 'Erro desconhecido',
+          statusCode: 500,
         })
       }
       return ErrorResponse.create({
