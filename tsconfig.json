@@ -18,7 +18,8 @@
       "vue",
       "node",
       "@vuelidate/core",
-      "@vuelidate/validators"
+      "@vuelidate/validators",
+      "cypress"
     ],
     "baseUrl": ".",
     "paths": {
@@ -30,7 +31,8 @@
     "src/**/*.d.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
-    "env.d.ts"
+    "env.d.ts",
+    "cypress/**/*.ts"
   ],
   "references": [
     {

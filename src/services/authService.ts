@@ -7,7 +7,7 @@ interface Credentials {
   password: string
 }
 
-export const AuthService = {
+export const authService = {
   async login(credentials: Credentials): Promise<SuccessResponse | ErrorResponse> {
     try {
       const response = await baseService.post('/auth/login', credentials)

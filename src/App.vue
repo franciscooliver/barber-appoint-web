@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <GlobalToast />
     <Toast />
     <ConfirmDialog />
     <AppHeader />
@@ -16,6 +17,7 @@ import AppHeader from '@/components/Layout/AppHeader.vue'
 import AppFooter from '@/components/Layout/AppFooter.vue'
 import Toast from 'primevue/toast'
 import ConfirmDialog from 'primevue/confirmdialog'
+import GlobalToast from '@/components/GlobalToast.vue'
 </script>
 
 <style scoped>

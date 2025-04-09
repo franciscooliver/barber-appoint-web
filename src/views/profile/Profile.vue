@@ -50,24 +50,19 @@
                 <InputText :modelValue="user?.address?.zipcode" disabled class="w-full" />
               </div>
 
-              <div class="col-12 md:col-4 field">
-                <label class="font-bold block mb-2">Cidade</label>
-                <InputText :modelValue="user?.address?.city" disabled class="w-full" />
+              <div class="col-12 md:col-6 field">
+                <label class="font-bold block mb-2">Cidade/UF</label>
+                <InputText :modelValue="user?.address?.city + ' - ' + user?.address?.state" disabled class="w-full" />
               </div>
 
               <div class="col-12 md:col-6 field">
                 <label class="font-bold block mb-2">Rua</label>
-                <InputText :modelValue="user?.address?.street" disabled class="w-full" />
+                <InputText :modelValue="user?.address?.street + ' - ' + user?.address?.number" disabled class="w-full" />
               </div>
 
               <div class="col-12 md:col-6 field">
                 <label class="font-bold block mb-2">Bairro</label>
                 <InputText :modelValue="user?.address?.neighborhood" disabled class="w-full" />
-              </div>
-
-              <div class="col-12 md:col-6 field">
-                <label class="font-bold block mb-2">Cidade/UF</label>
-                <InputText :modelValue="user?.address?.city + ' - ' + user?.address?.state" disabled class="w-full" />
               </div>
             </div>
           </div>
@@ -95,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import Card from 'primevue/card'
 import Avatar from 'primevue/avatar'
@@ -105,9 +100,10 @@ import Chip from 'primevue/chip'
 import Divider from 'primevue/divider'
 import EditAddressDialog from './components/EditAddressDialog.vue'
 import type { AddressForm } from '@/types/profile'
+import type { Address } from '@/types/auth'
 
 const authStore = useAuthStore()
-const user = authStore.user
+const user = computed(() => authStore.user)
 const dialogVisible = ref(false)
 const loading = ref(false)
 
@@ -118,11 +114,14 @@ const showEditDialog = () => {
 const saveAddress = async (formData: AddressForm) => {
   try {
     loading.value = true
-    await authStore.updateUserAddress(formData)
-    // Adicione um toast de sucesso aqui
+    const addressData: Address = {
+      id: user.value?.address?.id ?? null,
+      ...formData
+    }
+    authStore.updateUserLocal({ address: addressData })
+    dialogVisible.value = false
   } catch (error) {
     console.error('Erro ao salvar endereço:', error)
-    // Adicione um toast de erro aqui
   } finally {
     loading.value = false
   }

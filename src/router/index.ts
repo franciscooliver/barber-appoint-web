@@ -5,8 +5,8 @@ import Profile from '@/views/profile/Profile.vue'
 import NotFound from '@/views/NotFound.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import ClientScheduling from '@/views/scheduling/ClientScheduling.vue'
+import BarbershopSettings from '@/views/settings/BarbershopSettings.vue'
 
-// Configuração das rotas
 const routes = [
   {
     path: '/login',
@@ -37,6 +37,15 @@ const routes = [
     path: '/agendamentos',
     name: 'client-scheduling',
     component: ClientScheduling,
+    meta: {
+      requiresAuth: true,
+      role: 'client',
+    },
+  },
+  {
+    path: '/configuracoes',
+    name: 'settings',
+    component: BarbershopSettings,
     meta: {
       requiresAuth: true,
       role: 'client',

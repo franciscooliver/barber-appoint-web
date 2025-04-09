@@ -52,12 +52,12 @@
 
       <div class="col-12 md:col-4 field">
         <label class="font-bold">Estado</label>
-        <Dropdown
-          v-model="form.state"
-          :options="states"
-          optionLabel="name"
-          optionValue="value"
-          placeholder="Selecione"
+        <Dropdown 
+          v-model="form.state" 
+          :options="states" 
+          optionLabel="name" 
+          optionValue="value" 
+          placeholder="Selecione" 
         />
         <small v-if="v$.state.$error" class="p-error">
           {{ v$.state.$errors[0].$message }}
@@ -79,10 +79,11 @@ import InputMask from 'primevue/inputmask'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import type { ValidationRule } from '@vuelidate/core'
+import type { ValidationRule, ValidationRuleWithParams } from '@vuelidate/core'
 import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { required, maxLength } from '@vuelidate/validators'
 import type { AddressForm } from '@/types/profile'
+import { addressService } from '@/services/addressService'
 
 interface Props {
   modelValue: boolean
@@ -102,7 +103,8 @@ const form = reactive<AddressForm>({
   number: '',
   neighborhood: '',
   city: '',
-  state: ''
+  state: '',
+  uf: ''
 })
 
 const rules = {
@@ -112,19 +114,47 @@ const rules = {
   neighborhood: { required },
   city: { required },
   state: { required }
-} satisfies { [K in keyof AddressForm]: { required: ValidationRule } }
+} satisfies { 
+  [K in keyof AddressForm]: { [key: string]: ValidationRule | ValidationRuleWithParams } 
+}
 
 const v$ = useVuelidate(rules, form)
 
 const states = [
   { name: 'Acre', value: 'AC' },
   { name: 'Alagoas', value: 'AL' },
-  // ... outros estados
+  { name: 'Amapá', value: 'AP' },
+  { name: 'Amazonas', value: 'AM' },
+  { name: 'Bahia', value: 'BA' },
+  { name: 'Ceará', value: 'CE' },
+  { name: 'Distrito Federal', value: 'DF' },
+  { name: 'Espírito Santo', value: 'ES' },
+  { name: 'Goiás', value: 'GO' },
+  { name: 'Maranhão', value: 'MA' },
+  { name: 'Mato Grosso do Sul', value: 'MS' },
+  { name: 'Mato Grosso', value: 'MT' },
+  { name: 'Minas Gerais', value: 'MG' },
+  { name: 'Pará', value: 'PA' },
+  { name: 'Paraíba', value: 'PB' },
+  { name: 'Paraná', value: 'PR' },
+  { name: 'Pernambuco', value: 'PE' },
+  { name: 'Piauí', value: 'PI' },
+  { name: 'Rio de Janeiro', value: 'RJ' },
+  { name: 'Rio Grande do Norte', value: 'RN' },
+  { name: 'Rio Grande do Sul', value: 'RS' },
+  { name: 'Rio Verde do Sul', value: 'RR' },
+  { name: 'Santa Catarina', value: 'SC' },
+  { name: 'São Paulo', value: 'SP' },
+  { name: 'Sergipe', value: 'SE' },
+  { name: 'Tocantins', value: 'TO' }
 ]
 
 watch(() => props.initialData, (newValue) => {
   if (newValue) {
     Object.assign(form, newValue)
+    if (newValue.uf) {
+      form.state = newValue.uf
+    }
   }
 }, { immediate: true })
 
@@ -158,8 +188,16 @@ const onSave = async () => {
   const isValid = await v$.value.$validate()
   if (!isValid) return
 
-  emit('save', { ...form })
-  emit('update:modelValue', false)
+  try {
+    loading.value = true
+    const response = await addressService.updateAddress({ ...form })
+    emit('update:modelValue', false)
+    emit('save', response.data)
+  } catch (error) {
+    console.error('Error saving address:', error)
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -170,5 +208,19 @@ const onSave = async () => {
 
 .p-fluid .p-inputtext {
   width: 100%;
+}
+
+:deep(.p-dropdown) {
+  width: 100%;
+  display: block;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  margin-bottom: 0.5rem;
 }
 </style>

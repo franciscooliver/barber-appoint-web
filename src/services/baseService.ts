@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth'
+import router from '@/router'
 
 const API_URL = import.meta.env.VITE_APP_API_URL || 'http://localhost:3001'
 
@@ -21,5 +22,19 @@ instance.interceptors.request.use((config) => {
 
   return config
 })
+
+instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.log(error.response?.data?.statusCode);
+    
+    if (error.response?.data?.statusCode === 401) {
+      const authStore = useAuthStore()
+      authStore.clearAuth()
+      router.push('/login')
+    }
+    return Promise.reject(error)
+  }
+)
 
 export default instance
